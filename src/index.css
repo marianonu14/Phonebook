@@ -1,0 +1,36 @@
+body{
+    width: 80%;
+    margin: auto;
+}
+
+h1 {
+    color: green;
+    text-align: center;
+    font-style: italic;
+}
+
+h2 {
+    color: rgb(208, 173, 34);
+    text-align: center;
+}
+
+li {
+    color: grey;
+    padding-top: 3px;
+    font-size: 15px;
+  }
+
+input {
+    width: 100%;
+    margin: 1rem;
+    border-radius: 0.3rem;
+}
+
+.show-message {
+    padding: .5rem;
+    background-color: greenyellow;
+    color: black;
+    font-style: normal;
+    font-size: 1.5rem;
+    border-radius: 1rem;
+}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
+import Notification from './components/Notification'
 import contactService from './services/contacts'
 
 const App = () => {
@@ -9,6 +10,8 @@ const App = () => {
   const [ filter, setFilter ] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
+  const [ addNew, setAddNew ] = useState(false)
+  const [ message, setMessage ] = useState('')
   
   useEffect( () => {
     contactService
@@ -36,18 +39,26 @@ const App = () => {
     setNewNumber('')
   }
 
+  const showMessage = () => {
+    setAddNew(true)
+    setTimeout(() => {
+      setAddNew(false)
+      setMessage('')
+    }, 2000);
+  }
+
   const addName = (e) => {
     e.preventDefault()
-    const arrayTest = persons.find(elem => elem.name.toLowerCase() === newName.toLowerCase())
-    if (arrayTest){
+    const person = persons.find(elem => elem.name.toLowerCase() === newName.toLowerCase())
+    if (person){
         if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)){
           const updateObject = {
-            name: arrayTest.name,
+            name: person.name,
             number: newNumber,
-            id: arrayTest.id,
+            id: person.id,
         }
+        contactService.update(person.id, updateObject)
         const arrayFilter = persons.filter(elem => elem.name.toLowerCase() !== newName.toLowerCase())
-        contactService.update(arrayTest.id, updateObject)
         setPersons(arrayFilter.concat(updateObject))
         }
     } else {
@@ -56,6 +67,8 @@ const App = () => {
             number: newNumber,
             id: Date.now()
         }
+        setMessage(newName)
+        showMessage(newName)
         contactService.create(personObject);
         setFilter([])
         setPersons(persons.concat(personObject))
@@ -77,6 +90,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
+      {addNew ? <Notification name={message} /> : ''}
       <Filter function={handleFilterName} />
       <br />
       <h2>Add a New Contact</h2>
