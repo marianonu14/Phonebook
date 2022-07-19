@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = 'http://localhost:3001/persons'
+const url = '/api/persons'
 
 const getAll = () => {
     return axios.get(url)
@@ -18,4 +18,6 @@ const deleteContact = (id) => {
     return axios.delete(`${url}/${id}`)
 }
 
-export default { getAll, create, update, deleteContact }
+const objectFunction = { getAll, create, update, deleteContact }
+
+export default objectFunction

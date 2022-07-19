@@ -77,8 +77,10 @@ const App = () => {
   }
 
   const deletePerson = (e) => {
-    const newArray = persons.find(elem => elem.id === Number(e.target.id))
-    const newArrayPerson = persons.filter(elem => elem.id !== Number(e.target.id))
+    const newArray = persons.find(elem => elem.id === (e.target.id))
+
+    const newArrayPerson = persons.filter(elem => elem.id !== (e.target.id))
+    
     if(window.confirm(`Delete ${newArray.name}`)){
       contactService.deleteContact(e.target.id)
       setPersons(newArrayPerson) 
